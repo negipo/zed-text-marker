@@ -2,12 +2,13 @@ mod cli;
 
 use clap::Parser;
 use cli::{Cli, Command};
+use text_marker::commands;
 
 fn main() -> anyhow::Result<()> {
     let cli = Cli::parse();
     match cli.command {
-        Command::Serve => unimplemented!("task 5"),
-        Command::Toggle { .. } => unimplemented!("task 4"),
-        Command::Clear => unimplemented!("task 4"),
+        Command::Serve => commands::serve::run(),
+        Command::Toggle { text } => commands::toggle::run(&text),
+        Command::Clear => commands::clear::run(),
     }
 }
