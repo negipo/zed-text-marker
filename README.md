@@ -12,11 +12,13 @@ VSCode の text-marker 相当を、Rust 製 LSP + Zed wasm ラッパーで実現
 
 ## インストール
 
-1. バイナリを PATH に置く:
+1. バイナリを PATH に置く。Zed がコマンドを解決できるよう、PATH 上のディレクトリにインストールする:
 
    ```bash
-   cargo install --path server
+   cargo install --path server --root ~/.local
    ```
+
+   `~/.local/bin` が PATH に含まれている前提。`~/.cargo/bin` を PATH に通している場合は `cargo install --path server` でもよい。
 
 2. Zed に dev extension として登録: コマンドパレットで `zed: install dev extension` を実行し、この repo の `extension/` ディレクトリを選ぶ。
 
