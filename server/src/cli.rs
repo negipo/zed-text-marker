@@ -1,7 +1,7 @@
 use clap::{Parser, Subcommand};
 
 #[derive(Parser)]
-#[command(name = "text-marker", version)]
+#[command(name = "text-marker", version, about = "Toggle text marks and highlight matches in Zed via LSP diagnostics")]
 pub struct Cli {
     #[command(subcommand)]
     pub command: Command,
@@ -9,10 +9,10 @@ pub struct Cli {
 
 #[derive(Subcommand)]
 pub enum Command {
-    /// LSPサーバーをstdioで起動する
+    /// Run the LSP server over stdio
     Serve,
-    /// 選択文字列のマークをトグルする
+    /// Toggle a mark for the given text
     Toggle { text: String },
-    /// 全マークを消す
+    /// Remove all marks
     Clear,
 }
