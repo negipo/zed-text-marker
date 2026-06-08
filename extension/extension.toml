@@ -3,7 +3,7 @@ name = "Text Marker"
 version = "0.1.0"
 schema_version = 1
 authors = ["negipo"]
-description = "選択文字列をトグルで下線ハイライトする"
+description = "Toggle marks and underline matching text via LSP diagnostics"
 
 [language_servers.text-marker]
 name = "Text Marker"

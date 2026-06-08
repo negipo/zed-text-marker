@@ -2,7 +2,7 @@
   {
     "context": "Editor && vim_mode == normal",
     "bindings": {
-      // カーソル下の inner word を選択してから visual の toggle を発火する
+      // select the inner word under the cursor, then fire the visual-mode toggle
       "m h": ["workspace::SendKeystrokes", "v i w m h"],
       "m shift-h": ["task::Spawn", { "task_name": "text-marker: clear" }]
     }
