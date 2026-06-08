@@ -2,8 +2,15 @@
   {
     "context": "Editor && vim_mode == normal",
     "bindings": {
-      "m h": ["task::Spawn", { "task_name": "text-marker: toggle" }],
+      // カーソル下の inner word を選択してから visual の toggle を発火する
+      "m h": ["workspace::SendKeystrokes", "v i w m h"],
       "m shift-h": ["task::Spawn", { "task_name": "text-marker: clear" }]
+    }
+  },
+  {
+    "context": "Editor && vim_mode == visual",
+    "bindings": {
+      "m h": ["task::Spawn", { "task_name": "text-marker: toggle" }]
     }
   }
 ]

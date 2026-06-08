@@ -76,8 +76,8 @@ pub fn run() -> Result<()> {
     println!("Remaining manual steps:");
     println!("  1. Install the dev extension in Zed: run `zed: install dev extension`");
     println!("     from the command palette and select the `extension/` directory.");
-    println!("  2. Add these bindings to your Zed keymap (vim normal mode):");
-    println!(r#"       "m h": ["task::Spawn", {{ "task_name": "text-marker: toggle" }}],"#);
-    println!(r#"       "m shift-h": ["task::Spawn", {{ "task_name": "text-marker: clear" }}]"#);
+    println!("  2. Add the bindings from assets/keymap.json to your Zed keymap.");
+    println!("     In vim normal mode `m h` marks the word under the cursor and");
+    println!("     `m shift-h` clears all marks; in visual mode `m h` marks the selection.");
     Ok(())
 }
