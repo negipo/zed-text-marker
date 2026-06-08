@@ -15,4 +15,6 @@ pub enum Command {
     Toggle { text: String },
     /// Remove all marks
     Clear,
+    /// Set up Zed tasks and the marks directory
+    Install,
 }

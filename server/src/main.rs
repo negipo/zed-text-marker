@@ -10,5 +10,6 @@ fn main() -> anyhow::Result<()> {
         Command::Serve => commands::serve::run(),
         Command::Toggle { text } => commands::toggle::run(&text),
         Command::Clear => commands::clear::run(),
+        Command::Install => commands::install::run(),
     }
 }
