@@ -1,9 +1,9 @@
 # zed-text-marker
 
-## 開発方針
+## Workflow
 
-- このリポジトリでは`main`ブランチで直接作業してよい(個人プロジェクト)。feature branch や pull request は不要
+- This is a personal project, so commit and push directly to `main`. No feature branch or pull request is required.
 
-## コードポリシー
+## Code Policy
 
-- テスト・fixture・READMEの例はすべて架空のものにする
+- All examples in tests, fixtures, and the README must be fictional.

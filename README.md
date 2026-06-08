@@ -1,45 +1,52 @@
 # zed-text-marker
 
-選択した文字列をホットキーでトグルし、開いているドキュメントの一致箇所に下線ハイライトを出す Zed 用 private 拡張。
+A private Zed extension that toggles marks on hotkey and underlines every matching occurrence in the open documents.
 
-VSCode の text-marker 相当を、Rust 製 LSP + Zed wasm ラッパーで実現する。Zed には任意ハイライト API がない(issue #49438)ため、`publishDiagnostics` の下線描画を流用している。背景ベタ塗りではなく下線、色は単色(Information)。
+It reimplements VSCode's text-marker as a Rust LSP plus a thin Zed wasm wrapper. Zed has no arbitrary-highlight API (issue #49438), so it reuses `publishDiagnostics` underline rendering. Marks show up as underlines (not background fills), in a single severity (Error).
 
-## 構成
+## Layout
 
-- `server/` — native バイナリ `text-marker`(LSP本体 + toggle/clear CLI)
-- `extension/` — Zed wasm ラッパー拡張
-- `assets/` — keymap / tasks のサンプル
+- `server/` — native `text-marker` binary (LSP server plus the toggle/clear/install CLI)
+- `extension/` — Zed wasm wrapper extension
+- `assets/` — sample keymap / tasks
 
-## インストール
+## Install
 
-1. バイナリを PATH に置く。Zed がコマンドを解決できるよう、PATH 上のディレクトリにインストールする:
+1. Put the binary on a directory that is on your `PATH` so Zed can resolve it:
 
    ```bash
    cargo install --path server --root ~/.local
    ```
 
-   `~/.local/bin` が PATH に含まれている前提。`~/.cargo/bin` を PATH に通している場合は `cargo install --path server` でもよい。
+   This assumes `~/.local/bin` is on your `PATH`. If `~/.cargo/bin` is on your `PATH`, plain `cargo install --path server` works too.
 
-2. tasks と marks ディレクトリをセットアップする:
+2. Set up the Zed tasks and the marks directory:
 
    ```bash
    text-marker install
    ```
 
-   `~/.config/zed/tasks.json` に2つの task を冪等にマージし(既存タスクは保持)、marks ディレクトリを作る。残りの手順(下記3・4)も標準出力に表示される。
+   This idempotently merges two tasks into `~/.config/zed/tasks.json` (existing tasks are preserved) and creates the marks directory. It also prints the remaining steps (3 and 4 below).
 
-3. Zed に dev extension として登録: コマンドパレットで `zed: install dev extension` を実行し、この repo の `extension/` ディレクトリを選ぶ。これは GUI 操作で、CLI からは行えない。
+3. Register the dev extension in Zed: run `zed: install dev extension` from the command palette and select this repo's `extension/` directory. This is a GUI action and cannot be done from the CLI.
 
-4. keymap にバインドを追加する。`assets/keymap.json` を参考に、`Editor && vim_mode == normal` コンテキストへ以下を足す(`install` が表示する内容と同じ):
+4. Add the bindings to your Zed keymap by merging `assets/keymap.json`. Two contexts are used:
 
    ```json
-   "m h": ["task::Spawn", { "task_name": "text-marker: toggle" }],
+   // Editor && vim_mode == normal
+   "m h": ["workspace::SendKeystrokes", "v i w m h"],
    "m shift-h": ["task::Spawn", { "task_name": "text-marker: clear" }]
+
+   // Editor && vim_mode == visual
+   "m h": ["task::Spawn", { "task_name": "text-marker: toggle" }]
    ```
 
-## 使い方(vim normal mode)
+   The normal-mode `m h` selects the inner word and then fires the visual-mode `m h`. Zed tasks have no variable for "the word under the cursor" and can only pass `$ZED_SELECTED_TEXT` (the selection), so this two-step binding toggles the word under the cursor.
 
-- `m h` — 選択文字列のマークをトグル
-- `m H` — 全マークを消す
+## Usage
 
-マークは `~/.config/zed/text-marker/marks.json` にグローバルに永続化される。
+- normal mode `m h` — toggle the mark on the word under the cursor (every occurrence of the word lights up)
+- visual mode `m h` — toggle the mark on the selected text
+- normal mode `m H` — clear all marks
+
+Marks are persisted globally in `~/.config/zed/text-marker/marks.json`. After `m h` the editor stays in visual mode, so press `escape` to return.
