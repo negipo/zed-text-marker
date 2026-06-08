@@ -1,0 +1,27 @@
+id = "text-marker"
+name = "Text Marker"
+version = "0.1.0"
+schema_version = 1
+authors = ["negipo"]
+description = "選択文字列をトグルで下線ハイライトする"
+
+[language_servers.text-marker]
+name = "Text Marker"
+languages = [
+    "Plain Text",
+    "Markdown",
+    "JSON",
+    "JSONC",
+    "YAML",
+    "TOML",
+    "HTML",
+    "CSS",
+    "JavaScript",
+    "TypeScript",
+    "TSX",
+    "Python",
+    "Rust",
+    "Ruby",
+    "Go",
+    "Shell Script",
+]
