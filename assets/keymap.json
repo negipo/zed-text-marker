@@ -1,0 +1,9 @@
+[
+  {
+    "context": "Editor && vim_mode == normal",
+    "bindings": {
+      "m h": ["task::Spawn", { "task_name": "text-marker: toggle" }],
+      "m shift-h": ["task::Spawn", { "task_name": "text-marker: clear" }]
+    }
+  }
+]

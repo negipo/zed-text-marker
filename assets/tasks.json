@@ -1,0 +1,18 @@
+[
+  {
+    "label": "text-marker: toggle",
+    "command": "text-marker",
+    "args": ["toggle", "$ZED_SELECTED_TEXT"],
+    "reveal": "never",
+    "hide": "always",
+    "allow_concurrent_runs": true
+  },
+  {
+    "label": "text-marker: clear",
+    "command": "text-marker",
+    "args": ["clear"],
+    "reveal": "never",
+    "hide": "always",
+    "allow_concurrent_runs": true
+  }
+]
