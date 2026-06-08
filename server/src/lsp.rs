@@ -18,7 +18,7 @@ pub fn diagnostics_for(text: &str, words: &[String]) -> Vec<Diagnostic> {
                 .into_iter()
                 .map(|range| Diagnostic {
                     range,
-                    severity: Some(DiagnosticSeverity::INFORMATION),
+                    severity: Some(DiagnosticSeverity::ERROR),
                     source: Some("text-marker".to_string()),
                     message: format!("marked: {word}"),
                     ..Default::default()
