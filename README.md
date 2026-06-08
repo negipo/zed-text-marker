@@ -20,11 +20,22 @@ VSCode の text-marker 相当を、Rust 製 LSP + Zed wasm ラッパーで実現
 
    `~/.local/bin` が PATH に含まれている前提。`~/.cargo/bin` を PATH に通している場合は `cargo install --path server` でもよい。
 
-2. Zed に dev extension として登録: コマンドパレットで `zed: install dev extension` を実行し、この repo の `extension/` ディレクトリを選ぶ。
+2. tasks と marks ディレクトリをセットアップする:
 
-3. `assets/tasks.json` の2タスクを Zed の tasks(`~/.config/zed/tasks.json`)に追加する。
+   ```bash
+   text-marker install
+   ```
 
-4. `assets/keymap.json` のバインドを Zed の keymap(`~/.config/zed/keymap.json`)に追加する。
+   `~/.config/zed/tasks.json` に2つの task を冪等にマージし(既存タスクは保持)、marks ディレクトリを作る。残りの手順(下記3・4)も標準出力に表示される。
+
+3. Zed に dev extension として登録: コマンドパレットで `zed: install dev extension` を実行し、この repo の `extension/` ディレクトリを選ぶ。これは GUI 操作で、CLI からは行えない。
+
+4. keymap にバインドを追加する。`assets/keymap.json` を参考に、`Editor && vim_mode == normal` コンテキストへ以下を足す(`install` が表示する内容と同じ):
+
+   ```json
+   "m h": ["task::Spawn", { "task_name": "text-marker: toggle" }],
+   "m shift-h": ["task::Spawn", { "task_name": "text-marker: clear" }]
+   ```
 
 ## 使い方(vim normal mode)
 
