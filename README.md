@@ -1,8 +1,6 @@
 # zed-text-marker
 
-A private Zed extension that toggles marks on hotkey and underlines every matching occurrence in the open documents.
-
-It reimplements VSCode's text-marker as a Rust LSP plus a thin Zed wasm wrapper. Zed has no arbitrary-highlight API (issue #49438), so it reuses `publishDiagnostics` underline rendering. Marks show up as underlines (not background fills), in a single severity (Error).
+A Zed extension that toggles marks on hotkey and underlines every matching occurrence in the open documents.
 
 ## Layout
 
