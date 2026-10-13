@@ -47,4 +47,4 @@ A Zed extension that toggles marks on hotkey and underlines every matching occur
 - visual mode `m h` — toggle the mark on the selected text
 - normal mode `m H` — clear all marks
 
-Marks are persisted globally in `~/.config/zed/text-marker/marks.json`. After `m h` the editor stays in visual mode; press `escape` or just keep moving to leave it.
+Marks match as plain substrings: marking `widget` also lights the `widget` inside `old_widget`, and a mark such as `+d` lights wherever it appears. Marks are persisted globally in `~/.config/zed/text-marker/marks.json`. After `m h` the editor stays in visual mode; press `escape` or just keep moving to leave it.

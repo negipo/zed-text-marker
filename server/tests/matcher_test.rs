@@ -6,10 +6,31 @@ fn r(sl: u32, sc: u32, el: u32, ec: u32) -> Range {
 }
 
 #[test]
-fn matches_word_boundary_only() {
+fn matches_inside_longer_word() {
     let text = "foo foobar foo";
     let got = find_ranges(text, &["foo".to_string()]);
-    assert_eq!(got, vec![r(0, 0, 0, 3), r(0, 11, 0, 14)]);
+    assert_eq!(got, vec![r(0, 0, 0, 3), r(0, 4, 0, 7), r(0, 11, 0, 14)]);
+}
+
+#[test]
+fn matches_after_underscore() {
+    let text = "old_widget widget";
+    let got = find_ranges(text, &["widget".to_string()]);
+    assert_eq!(got, vec![r(0, 4, 0, 10), r(0, 11, 0, 17)]);
+}
+
+#[test]
+fn matches_symbol_word_glued_to_identifier() {
+    let text = "x+d +d";
+    let got = find_ranges(text, &["+d".to_string()]);
+    assert_eq!(got, vec![r(0, 1, 0, 3), r(0, 4, 0, 6)]);
+}
+
+#[test]
+fn matches_do_not_overlap() {
+    let text = "aaa";
+    let got = find_ranges(text, &["aa".to_string()]);
+    assert_eq!(got, vec![r(0, 0, 0, 2)]);
 }
 
 #[test]

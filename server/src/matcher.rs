@@ -1,9 +1,5 @@
 use tower_lsp::lsp_types::{Position, Range};
 
-fn is_word_byte(b: u8) -> bool {
-    b.is_ascii_alphanumeric() || b == b'_'
-}
-
 /// バイトオフセット列を LSP Position に変換する。character は UTF-16 コードユニット数。
 fn offsets_to_positions(text: &str, targets: Vec<usize>) -> Vec<Position> {
     let mut order: Vec<usize> = (0..targets.len()).collect();
@@ -47,7 +43,7 @@ fn offsets_to_positions(text: &str, targets: Vec<usize>) -> Vec<Position> {
     result
 }
 
-/// text 内の各語の単語境界マッチを Range で返す。出現順(開始バイト昇順)。
+/// text 内の各語の部分一致(重複なし)を Range で返す。出現順(開始バイト昇順)。
 pub fn find_ranges(text: &str, words: &[String]) -> Vec<Range> {
     let bytes = text.as_bytes();
     let mut spans: Vec<(usize, usize)> = Vec::new();
@@ -61,12 +57,8 @@ pub fn find_ranges(text: &str, words: &[String]) -> Vec<Range> {
         while let Some(rel) = find_subslice(&bytes[start..], wbytes) {
             let s = start + rel;
             let e = s + wbytes.len();
-            let left_ok = s == 0 || !is_word_byte(bytes[s - 1]);
-            let right_ok = e == bytes.len() || !is_word_byte(bytes[e]);
-            if left_ok && right_ok {
-                spans.push((s, e));
-            }
-            start = s + 1;
+            spans.push((s, e));
+            start = e;
         }
     }
 
